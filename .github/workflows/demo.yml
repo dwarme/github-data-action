@@ -9,6 +9,11 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }} # Whenever the file packages-lock.json change, a new hashed is generated
       - name: Install dependencies
         run: npm ci
       - name: Lint code
@@ -23,6 +28,12 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      # If a cache already exists, than cache is used, instand of creating new (Note: The keys must be the same). In this case, is already created by "test" job.
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }} # Whenever the file packages-lock.json change, a new hashed is generated
       - name: Install dependencies
         run: npm ci
       - name: Build website
