@@ -5,6 +5,7 @@ on:
       - main
     paths-ignore:
       - '.github/workflow/*'
+      - 'README.md'
 jobs:
   test:
     runs-on: ubuntu-latest
